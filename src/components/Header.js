@@ -9,7 +9,8 @@ const Header = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  //const user = useSelector(store => store.user);
+  const user = useSelector(store => store.user);
+  console.log(user);
 
   const handleSignOut = () => {
     signOut(auth).then(() => {
@@ -26,9 +27,7 @@ const Header = () => {
 
       <img
             className="hidden md:block w-12 h-12"
-            alt="usericon"
-            
-            
+            alt="usericon"   
           />
           <button onClick={handleSignOut} className="font-bold text-white ">
             (Sign Out)
