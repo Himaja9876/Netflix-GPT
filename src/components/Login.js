@@ -2,14 +2,16 @@ import React, { useRef, useState } from 'react'
 import { ClickValidate } from '../utils/validate';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from '../utils/firebase';
-import { useNavigate } from 'react-router-dom';
 import Header from './Header';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../utils/userSlice';
+import { AVATARLOGO } from '../utils/constants';
 
 const Login = () => {
 
   const [signIn, setSignIn] = useState(false);
   const [error, setError] = useState("");
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const email = useRef(null);
   const password = useRef(null);
@@ -38,11 +40,16 @@ const Login = () => {
        const user = userCredential.user;
        //console.log(user)
         updateProfile(user, {
-          displayName: fullnameUser, photoURL: "https://media.licdn.com/dms/image/v2/D5635AQEYJL78z6asWg/profile-framedphoto-shrink_400_400/profile-framedphoto-shrink_400_400/0/1693461881556?e=1724875200&v=beta&t=8-zpmLCUraCRBwZePMpgTzn4Hq9ucB8U8fS1aPSDAoQ"
+          displayName: fullnameUser, photoURL: AVATARLOGO
         }).then(() => {
-          // Profile updated!
-          // console.log(user);
-          navigate("/");
+          const { uid, email, displayName, photoURL } = auth.currentUser;
+          dispatch(addUser({ 
+            uid: uid,
+            email: email,
+            displayName: displayName,
+            photoURL: photoURL,
+          }));
+          
         }).catch((error) => {
           // An error occurred
           // ...
@@ -63,9 +70,8 @@ const Login = () => {
       .then((userCredential) => {
        // Signed in 
       const user = userCredential.user;
-       console.log(user);
-       navigate("/browse");
-  
+       //console.log(user);
+       
       })
       .catch((error) => {
       const errorCode = error.code;
