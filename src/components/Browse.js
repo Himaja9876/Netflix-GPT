@@ -8,7 +8,6 @@ import useTopRated from '../hooks/useTopRated';
 import useUpComing from '../hooks/useUpComing';
 
 
-
 const Browse = () => {
    
   useNowPlayingMovies();
