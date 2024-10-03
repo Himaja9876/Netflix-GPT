@@ -10,17 +10,17 @@ const useUpComing = () => {
 
   const topRated = async () => {
     const data = await fetch(
-      'https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1', 
+      "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1",
       OPTIONS
     );
     const json = await data.json();
-    console.log(json.results);
+    //console.log(json.results);
     dispatch(addUpComing(json.results));
- }
+  };
 
   useEffect(() => {
-   !getUpComing && topRated();
+    !getUpComing && topRated();
   }, []);
-}
+};
 
 export default useUpComing;
