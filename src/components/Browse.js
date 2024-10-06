@@ -1,22 +1,23 @@
-import React from 'react';
-import Header from './Header';
+import React from "react";
+import Header from "./Header";
 import useNowPlayingMovies from "../hooks/useNowPlayingMovies";
 import MainContainer from "./MainContainer";
 import SecondaryContainer from "./SecondaryContainer";
-import usePopularMovies from '../hooks/usePopularMovies';
-import useTopRated from '../hooks/useTopRated';
-import useUpComing from '../hooks/useUpComing';
-import GptSearch from './GptSearch';
+import usePopularMovies from "../hooks/usePopularMovies";
+import useTopRated from "../hooks/useTopRated";
+import useUpComing from "../hooks/useUpComing";
+import GptSearch from "./GptSearch";
 import { useSelector } from "react-redux";
+import useMovieTrailers from "../hooks/useMovieTrailers";
 
 const Browse = () => {
-
   const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
 
   useNowPlayingMovies();
   usePopularMovies();
   useTopRated();
   useUpComing();
+  useMovieTrailers();
 
   return (
     <div>
@@ -30,7 +31,7 @@ const Browse = () => {
         </>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Browse
+export default Browse;
