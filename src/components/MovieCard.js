@@ -1,15 +1,35 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { IMG_CDN_URL } from "../utils/constants";
 import useMovieTrailers from "../hooks/useMovieTrailers";
 
 const MovieCard = ({ posterPath, movieId, title, overview, releaseDate }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [showVideo, setShowVideo] = useState(false);
   const { trailerKey, fetchTrailer } = useMovieTrailers(movieId);
+  const iframeRef = useRef(null);
 
   const handleMouseEnter = () => {
     setIsHovered(true);
     fetchTrailer();
   };
+
+  useEffect(() => {
+    let timer;
+    if (isHovered && trailerKey) {
+      timer = setTimeout(() => {
+        setShowVideo(true);
+      }, 100); // Delay showing video by 100ms
+    } else {
+      setShowVideo(false);
+    }
+    return () => clearTimeout(timer);
+  }, [isHovered, trailerKey]);
+
+  useEffect(() => {
+    if (showVideo && trailerKey && iframeRef.current) {
+      iframeRef.current.src = `https://www.youtube.com/embed/${trailerKey}?autoplay=1&mute=1&showinfo=0&loop=1&color=white&controls=0&modestbranding=1&playsinline=1&rel=0&enablejsapi=1&playlist=${trailerKey}`;
+    }
+  }, [showVideo, trailerKey]);
 
   if (!posterPath) return null;
 
@@ -25,27 +45,42 @@ const MovieCard = ({ posterPath, movieId, title, overview, releaseDate }) => {
         src={IMG_CDN_URL + posterPath}
       />
       {isHovered && (
-        <div className="absolute top-0 left-0 w-[300px] h-[550px] bg-zinc-800 rounded-lg p-4 flex flex-col justify-between z-50 shadow-lg">
-          {trailerKey && (
-            <div className="mt-4">
+        <div className="absolute -top-8 -left-8 w-[calc(100%+56px)] h-[calc(100%+16px)] bg-zinc-800 rounded-lg z-50 shadow-lg transform scale-110 overflow-hidden">
+          <div className="w-full h-[168px] relative overflow-hidden">
+            {showVideo && (
               <iframe
-                className="w-full h-40 rounded-lg"
-                src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1&mute=1&controls=0&modestbranding=1`}
+                ref={iframeRef}
+                className="aspect-video top-1/2 left-1/2 h-[110%] scale-150"
+                title={`${title} trailer`}
+                frameborder="0"
                 allow="autoplay; encrypted-media"
                 allowFullScreen
-                title={`${title} trailer`}
               />
-            </div>
-          )}
-          <div>
+            )}
+          </div>
+          <div className="p-4">
             <h3 className="text-white font-bold text-lg mb-2">{title}</h3>
             <p className="text-white text-xs mb-2">{releaseDate}</p>
-            <p className="text-white text-sm overflow-hidden line-clamp-3">
+            <p className="text-white text-sm overflow-hidden line-clamp-2">
               {overview}
             </p>
           </div>
         </div>
       )}
+      <style jsx>{`
+        iframe {
+          pointer-events: none;
+          width: 100%;
+          height: 100%;
+          border: none;
+        }
+        iframe::-webkit-scrollbar {
+          display: none;
+        }
+        iframe {
+          scrollbar-width: none;
+        }
+      `}</style>
     </div>
   );
 };
