@@ -13,10 +13,7 @@ import { SUPPORTED_LANGUAGES } from "../utils/constants";
 import { changeLanguage } from "../utils/langSlice";
 
 const Header = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
-  const user = useSelector((store) => store.user);
+  
   //console.log(user);
 
   const handleSignOut = () => {
