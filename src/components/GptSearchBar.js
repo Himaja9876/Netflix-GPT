@@ -1,17 +1,15 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import lang from '../utils/languageConstants';
+import React from "react";
+import { useSelector } from "react-redux";
+import lang from "../utils/languageConstants";
 import { useRef } from "react";
-import openai from '../utils/openai';
-import { OPTIONS } from '../utils/constants';
-import { useDispatch } from 'react-redux';
-import { addGptMovieResult } from '../utils/gptSlice';
-
+import openai from "../utils/openai";
+import { OPTIONS } from "../utils/constants";
+import { useDispatch } from "react-redux";
+import { addGptMovieResult } from "../utils/gptSlice";
 
 const GptSearchBar = () => {
-
   const dispatch = useDispatch();
-  const langKey = useSelector(store => store.lang.lang)
+  const langKey = useSelector((store) => store.lang.lang);
   console.log(langKey);
   const searchText = useRef(null);
   //console.log(lang[langKey]);
@@ -48,7 +46,7 @@ const GptSearchBar = () => {
     const promiseArray = gptMovies.map((movie) => searchMovieTMDB(movie)); //as it is an async funtion, it return (first empty promise, then updates)promises for each movie
     // [Promise, Promise, Promise, Promise, Promise]
 
-    const tmdbResults = await Promise.all(promiseArray);   //we're not sure how much time it takes for each promise to resolve so promise.all waits till all the promises gets resolved
+    const tmdbResults = await Promise.all(promiseArray); //we're not sure how much time it takes for each promise to resolve so promise.all waits till all the promises gets resolved
 
     console.log(tmdbResults); // we got all the movies that matches with the names from TMDB API ( each move has dofferent lang)
     //will store these results in redux
@@ -56,26 +54,29 @@ const GptSearchBar = () => {
     dispatch(
       addGptMovieResult({ movieNames: gptMovies, movieResults: tmdbResults })
     );
+  };
 
-  }
-  
   return (
-    <div className='pt-[10%] flex justify-center'>
-      <form className='w-1/2 w-100 h-24 bg-black grid grid-cols-12' onSubmit={(e) => e.preventDefault()}>
-        <input 
-        ref={searchText}
-        type='text' 
-        className='p-4 m-4 col-span-9' 
-        placeholder={lang[langKey].gptSearchPlaceholder}
+    <div className="pt-[35%] md:pt-[15%] flex justify-center">
+      <form
+        className="w-full md:w-1/2 h-24 bg-black grid grid-cols-12"
+        onSubmit={(e) => e.preventDefault()}
+      >
+        <input
+          ref={searchText}
+          type="text"
+          className="p-4 m-4 col-span-9"
+          placeholder={lang[langKey].gptSearchPlaceholder}
         />
-        <button className='col-span-3 m-4 py-2 px-4 bg-red-700 rounded-lg text-white' onClick={handleGptSearchClick}>
+        <button
+          className="col-span-3 m-4 py-2 px-4 bg-red-700 rounded-lg text-white"
+          onClick={handleGptSearchClick}
+        >
           {lang[langKey].search}
         </button>
-
       </form>
-
     </div>
-  )
-}
+  );
+};
 
-export default GptSearchBar
+export default GptSearchBar;

@@ -69,7 +69,7 @@ const Header = () => {
           {showGptSearch && (
             <select
               onChange={handleLangChange}
-              className="p-2 m-2 bg-gray-900 text-white"
+              className="p-2 m-2 bg-gray-900 text-white rounded-lg"
             >
               {SUPPORTED_LANGUAGES.map((lang) => (
                 <option key={lang.identifier} value={lang.identifier}>
@@ -79,14 +79,14 @@ const Header = () => {
             </select>
           )}
           <button
-            className="py-2 px-4 mx-4 my-2 text-white rounded-lg cursor-pointer"
+            className="py-2 px-4 mx-4 my-2  bg-gray-900 text-white rounded-lg cursor-pointer"
             onClick={handleGptSearchClick}
           >
             {showGptSearch ? "Homepage" : "GPT Search"}
           </button>
           <img
             onClick={handleSignOut}
-            className="hidden md:block w-8 h-8 mt-3 rounded-sm cursor-pointer"
+            className="w-8 h-8 mt-3 rounded-sm cursor-pointer"
             src={user.photoURL}
             alt="usericon"
           />
