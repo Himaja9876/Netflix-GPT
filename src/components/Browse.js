@@ -8,6 +8,7 @@ import useTopRated from "../hooks/useTopRated";
 import useUpComing from "../hooks/useUpComing";
 import GptSearch from "./GptSearch";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const Browse = () => {
   const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
@@ -17,6 +18,16 @@ const Browse = () => {
   useTopRated();
   useUpComing();
   //useMovieTrailers();
+
+  useEffect(() => {
+    document.documentElement.classList.add("scrollbar-hide");
+    document.body.classList.add("scrollbar-hide");
+
+    return () => {
+      document.documentElement.classList.remove("scrollbar-hide");
+      document.body.classList.remove("scrollbar-hide");
+    };
+  }, []);
 
   return (
     <div>

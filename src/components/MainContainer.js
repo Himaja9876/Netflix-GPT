@@ -15,7 +15,7 @@ const MainContainer = () => {
   const { title, overview, id } = mainMovie;
 
   return (
-    <div className="bg-gradient-to-r from-black z-5">
+    <div className="bg-gradient-to-r from-black z-5 w-screen">
       <VideoTitle title={title} description={overview} />
       <VideoBackground movieId={id} />
     </div>
