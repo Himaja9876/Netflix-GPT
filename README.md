@@ -25,7 +25,7 @@ Interact with the chatbot to refine your preferences.
 Explore recommendations and enjoy discovering new movies and shows!
 
 
-Setup & Installation
+#Setup & Installation
 
 Clone the repository:
 git clone https://github.com/Himaja9876/Netflix-GPT.git
