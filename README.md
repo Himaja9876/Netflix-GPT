@@ -23,3 +23,25 @@ Start by signing in or creating an account.
 Enter a movie genre, rating, or keyword to get recommendations.
 Interact with the chatbot to refine your preferences.
 Explore recommendations and enjoy discovering new movies and shows!
+
+
+Setup & Installation
+
+Clone the repository:
+git clone https://github.com/Himaja9876/Netflix-GPT.git
+cd Netflix-GPT
+
+Install dependencies:
+npm install
+
+Set up API keys:
+Create an .env file in the root directory.
+Add your OpenAI and TMDB API keys:
+REACT_APP_OPEN_API_KEY=your_openai_api_key
+REACT_APP_TMDB_KEY=your_tmdb_api_key
+
+Run the app locally:
+npm start
+Open in your browser:
+
+Navigate to http://localhost:3000 to see Netflix GPT in action!
