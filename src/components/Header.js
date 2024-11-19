@@ -50,7 +50,7 @@ const Header = () => {
       }
     });
     return () => unsubscribe;
-  }, []);
+  }, [dispatch, navigate]);
 
   const handleGptSearchClick = () => {
     // Toggle GPT Search
