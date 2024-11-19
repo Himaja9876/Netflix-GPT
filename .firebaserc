@@ -1,5 +1,15 @@
 {
   "projects": {
-    "default": "netflixgpt-30c5b"
+    "default": "netflixgpt-30c5b",
+    "production": "netflixgpt-30c5b"
+  },
+  "targets": {
+    "netflixgpt-30c5b": {
+      "hosting": {
+        "production": [
+          "netflixgpt-30c5b"
+        ]
+      }
+    }
   }
 }
