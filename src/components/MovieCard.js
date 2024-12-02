@@ -3,24 +3,39 @@ import { IMG_CDN_URL } from "../utils/constants";
 import useMovieTrailers from "../hooks/useMovieTrailers";
 
 const MovieCard = ({ posterPath, movieId, title, overview, releaseDate }) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const [showVideo, setShowVideo] = useState(false);
+  const [isHovered, setIsHovered] = useState(false); // Control card expansion
+  const [showVideo, setShowVideo] = useState(false); // Control trailer playback
+  const [hoverTimer, setHoverTimer] = useState(null); // Store the hover timer
   const { trailerKey, fetchTrailer } = useMovieTrailers(movieId);
   const iframeRef = useRef(null);
 
   const handleMouseEnter = () => {
-    setIsHovered(true);
-    fetchTrailer();
+    // Start a timer to trigger hover effect and trailer playback after 1 second
+    const timer = setTimeout(() => {
+      setIsHovered(true); // Expand the card
+      fetchTrailer(); // Fetch the trailer
+    }, 800); // 1-second delay
+    setHoverTimer(timer); // Store the timer
+  };
+
+  const handleMouseLeave = () => {
+    // Reset hover and trailer states, and clear the timer
+    setIsHovered(false);
+    setShowVideo(false);
+    if (hoverTimer) {
+      clearTimeout(hoverTimer); // Clear the timer if user leaves early
+      setHoverTimer(null);
+    }
   };
 
   useEffect(() => {
     let timer;
     if (isHovered && trailerKey) {
       timer = setTimeout(() => {
-        setShowVideo(true);
-      }, 100); // Delay showing video by 100ms
+        setShowVideo(true); // Start the trailer after card expansion
+      }, 100); // Slight delay for smoother transition
     } else {
-      setShowVideo(false);
+      setShowVideo(false); // Reset trailer state
     }
     return () => clearTimeout(timer);
   }, [isHovered, trailerKey]);
@@ -35,9 +50,11 @@ const MovieCard = ({ posterPath, movieId, title, overview, releaseDate }) => {
 
   return (
     <div
-      className="w-36 md:w-48 pr-4 relative"
+      className={`w-36 cursor-pointer md:w-48 pr-4 relative transition-transform ${
+        isHovered ? "scale-110 z-50" : ""
+      }`}
       onMouseEnter={handleMouseEnter}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseLeave={handleMouseLeave}
     >
       <img
         alt={`${title} poster`}
@@ -45,14 +62,14 @@ const MovieCard = ({ posterPath, movieId, title, overview, releaseDate }) => {
         src={IMG_CDN_URL + posterPath}
       />
       {isHovered && (
-        <div className="absolute -top-8 -left-8 w-[calc(100%+56px)] h-[calc(100%+16px)] bg-zinc-800 rounded-lg z-50 shadow-lg transform scale-110 overflow-hidden">
+        <div className="absolute -top-8 -left-8 w-[calc(100%+56px)] h-[calc(100%+16px)] bg-zinc-800 rounded-lg z-50 shadow-lg overflow-hidden">
           <div className="w-full h-[168px] relative overflow-hidden">
             {showVideo && (
               <iframe
                 ref={iframeRef}
-                className="aspect-video top-1/2 left-1/2 h-[110%] scale-150"
+                className="aspect-video w-full h-full"
                 title={`${title} trailer`}
-                frameborder="0"
+                frameBorder="0"
                 allow="autoplay; encrypted-media"
                 allowFullScreen
               />
