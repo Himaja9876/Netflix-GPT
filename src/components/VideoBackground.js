@@ -1,26 +1,27 @@
+import React from "react";
 import { useSelector } from "react-redux";
 import useMovieTrailer from "../hooks/useMovieTrailer";
 
-export const VideoBackground = ({ movieId }) => {
-  const trailerdetails = useSelector((store) => store.movies.addTrailerVideo);
-  //console.log(trailerdetails);
-  useMovieTrailer(movieId);
+const VideoBackground = ({ movieId }) => {
+  const trailerDetails = useSelector((store) => store.movies.addTrailerVideo); // Fetch trailer details
+  useMovieTrailer(movieId); // Fetch trailer key for this movie
 
   return (
     <div className="w-screen h-screen overflow-hidden">
       <iframe
-        className="aspect-video top-1/2 left-1/2 h-[70%] md:h-[110%] scale-150"
+        className="absolute top-0 left-0 w-full h-full object-cover"
         src={
-          trailerdetails && trailerdetails.key
-            ? `https://www.youtube.com/embed/${trailerdetails.key}?autoplay=1&mute=1&modestbranding=1&controls=0&loop=1&playlist=${trailerdetails.key}`
+          trailerDetails?.key
+            ? `https://www.youtube.com/embed/${trailerDetails.key}?autoplay=1&mute=1&modestbranding=1&controls=0&loop=1&playlist=${trailerDetails.key}`
             : ""
         }
-        title="YouTube video player"
-        allow="fullscreen; accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        referrerPolicy="strict-origin-when-cross-origin"
+        title="Background Video"
+        allow="autoplay; fullscreen; encrypted-media; accelerometer; gyroscope; picture-in-picture"
         allowFullScreen
         style={{ border: "none" }}
-      ></iframe>
+      />
     </div>
   );
 };
+
+export default VideoBackground;

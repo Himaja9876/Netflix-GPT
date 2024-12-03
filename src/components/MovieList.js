@@ -1,14 +1,16 @@
 import MovieCard from "./MovieCard";
 
 const MovieList = ({ title, movies }) => {
-  //console.log(movies);
   return (
     <div className="px-6">
+      {/* Title */}
       <h1 className="text-lg md:text-xl py-2 mt-0 md:py-3 md:mt-5 text-white">
         {title}
       </h1>
-      <div className="flex overflow-x-scroll scrollbar-hide">
-        <div className="flex">
+      {/* Horizontal Scrollable Container */}
+      <div className="flex overflow-x-scroll scrollbar-hide relative">
+        {/* Movie Cards Container */}
+        <div className="flex overflow-visible">
           {movies?.map((movie) => (
             <MovieCard
               key={movie.id}
@@ -24,4 +26,5 @@ const MovieList = ({ title, movies }) => {
     </div>
   );
 };
+
 export default MovieList;

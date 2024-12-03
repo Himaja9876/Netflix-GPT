@@ -8,7 +8,7 @@ import useNowPlayingMovies from "../hooks/useNowPlayingMovies";
 import usePopularMovies from "../hooks/usePopularMovies";
 import useTopRated from "../hooks/useTopRated";
 import useUpComing from "../hooks/useUpComing";
-import FullScreenTrailer from "./FullScreenTrailer"; // New Component
+import FullScreenTrailer from "./FullScreenTrailer";
 
 const Browse = () => {
   const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
