@@ -1,4 +1,5 @@
 Netflix GPT 🎬🤖
+Live Demo: https://movies-openai-gpt.netlify.app/
 
 Netflix GPT is an AI-driven movie recommendation app that combines the power of OpenAI's language model with a sleek, user-friendly interface. Built to help users find movies and TV shows they'll love, Netflix GPT suggests titles based on user preferences such as ratings and genres for a tailored experience.
 
